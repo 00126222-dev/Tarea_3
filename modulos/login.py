@@ -14,7 +14,7 @@ def verificar_usuario(Usuario, Contraseña):
     try:
         cursor = con.cursor()
         query = "SELECT usuario, contraseña FROM Empleado WHERE usuario = %s AND contraseña = %"
-        cursor.execute(query, (usuario, contraseña))
+        cursor.execute(query, (Usuario, Contraseña))
         result = cursor.fetchone()
         return result[0] if result else None
     finally:
