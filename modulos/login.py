@@ -2,7 +2,7 @@ import streamlit as st
 from modulos.config.conexion import obtener_conexion
 
 
-def verificar_usuario(usuario, contraseña):
+def verificar_usuario(Usuario, Contra):
     con = obtener_conexion()
     if not con:
         st.error("⚠️ No se pudo conectar a la base de datos.")
@@ -14,7 +14,7 @@ def verificar_usuario(usuario, contraseña):
     try:
         cursor = con.cursor()
         query = "SELECT usuario, contraseña FROM Empleado WHERE usuario = %s AND contraseña = %"
-        cursor.execute(query, (usuario, contraseña))
+        cursor.execute(query, (Usuario, Contra))
         result = cursor.fetchone()
         return result[0] if result else None
     finally:
@@ -28,11 +28,11 @@ def login():
     if st.session_state.get("conexion_exitosa"):
         st.success("✅ Conexión a la base de datos establecida correctamente.")
 
-    usuario = st.text_input("Usuario", key="usuario_input")
-    contraseña = st.text_input("Contraseña", type="password", key="contraseña_input")
+    Usuario = st.text_input("Usuario", key="Usuario_input")
+    Contra = st.text_input("Contraseña", type="password", key="Contra_input")
 
     if st.button("Iniciar sesión"):
-        tipo = verificar_usuario(usuario, contraseña)
+        tipo = verificar_usuario(Usuario, Contra)
         if tipo:
             st.session_state["usuario"] = usuario
           
